@@ -112,11 +112,16 @@ debootstrap --cache-dir=/var/cache/debootstrap --components=main,contrib,non-fre
 zfs set devices=off rpool
 
 # mount stuff into chroot
-mount --rbind /dev "${DEST_CHROOT_DIR}"/dev
-mount --rbind /proc "${DEST_CHROOT_DIR}"/proc
-mount --rbind /sys "${DEST_CHROOT_DIR}"/sys
+# not needed for systemd-nspawn
+#mount --rbind /dev "${DEST_CHROOT_DIR}"/dev
+#mount --rbind /proc "${DEST_CHROOT_DIR}"/proc
+#mount --rbind /sys "${DEST_CHROOT_DIR}"/sys
+#mount --make-rslave "${DEST_CHROOT_DIR}"/dev
+#mount --make-rslave "${DEST_CHROOT_DIR}"/proc
+#mount --make-rslave "${DEST_CHROOT_DIR}"/sys
 
 rsync -rlv seed-root/ "${DEST_CHROOT_DIR}/"
 sed -i "s,__DEST_DISK_ID__,${DEST_DISK_ID},g" "${DEST_CHROOT_DIR}/var/tmp/installscript.sh"
 
-chroot "${DEST_CHROOT_DIR}" /bin/bash -x /var/tmp/installscript.sh
+#chroot "${DEST_CHROOT_DIR}" /bin/bash -x /var/tmp/installscript.sh
+systemd-nspawn -D "${DEST_CHROOT_DIR}" /bin/bash -x /var/tmp/installscript.sh
