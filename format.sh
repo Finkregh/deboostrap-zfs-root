@@ -133,24 +133,14 @@ else
     done
 fi
 
-echo "Switch to installed system (systemd-nspawn)?"
-select yn in "Yes" "No"; do
-    case $yn in
-    Yes)
-        systemd-nspawn -D "${DEST_CHROOT_DIR}" PATH=/usr/sbin:$PATH /bin/bash
-        ;;
-    No) continue ;;
-    esac
-done
+read -r -p "Switch to installed system (systemd-nspawn)?" _nspawn_switch
+if [[ "$_nspawn_switch" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
+    systemd-nspawn -D "${DEST_CHROOT_DIR}" PATH=/usr/sbin:$PATH /bin/bash --login
 
-echo "cleanup (umount, zfs export etc.)?"
-select yn in "Yes" "No"; do
-    case $yn in
-    Yes)
-        zfs umount -a
-        zpool export bpool
-        zpool export rpool
-        ;;
-    No) exit 0 ;;
-    esac
-done
+fi
+read -r -p "cleanup (umount __ALL ZFS MOUNTS__, zfs export etc.)?" _cleanup
+if [[ "$_cleanup" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
+    zfs umount -a
+    zpool export bpool
+    zpool export rpool
+fi
