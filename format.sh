@@ -125,3 +125,25 @@ sed -i "s,__DEST_DISK_ID__,${DEST_DISK_ID},g" "${DEST_CHROOT_DIR}/var/tmp/instal
 
 #chroot "${DEST_CHROOT_DIR}" /bin/bash -x /var/tmp/installscript.sh
 systemd-nspawn -D "${DEST_CHROOT_DIR}" /bin/bash -x /var/tmp/installscript.sh
+
+echo "Switch to installed system (chroot)?"
+select yn in "Yes" "No"; do
+    case $yn in
+    Yes)
+        systemd-nspawn -D "${DEST_CHROOT_DIR}" PATH=/usr/sbin:$PATH /bin/bash
+        ;;
+    No) continue ;;
+    esac
+done
+
+echo "cleanup (umount, zfs export etc.)?"
+select yn in "Yes" "No"; do
+    case $yn in
+    Yes)
+        zfs umount -a
+        zpool export bpool
+        zpool export rpool
+        ;;
+    No) exit 0 ;;
+    esac
+done
