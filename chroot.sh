@@ -16,4 +16,13 @@ zfs mount bpool/BOOT/debian
 
 for z in rpool/home rpool/var/cache rpool/var/lib/docker rpool/var/log rpool/var/spool rpool/var/tmp; do zfs mount $z; done
 
-systemd-nspawn -D "${DEST_CHROOT_DIR}" /bin/bash -x /var/tmp/installscript.sh
+echo "run this afterward:"
+echo "
+sudo zfs umount -a
+sudo zfs umount /mnt/tmp/boot
+sudo zfs umount /mnt/tmp
+sudo zpool export bpool
+sudo zpool export rpool
+"
+
+systemd-nspawn -D "${DEST_CHROOT_DIR}" /bin/bash
