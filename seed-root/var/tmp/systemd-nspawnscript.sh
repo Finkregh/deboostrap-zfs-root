@@ -26,3 +26,14 @@ apt install --yes grub-pc grub2
 systemctl enable zfs-import-bpool.service
 cp /usr/share/systemd/tmp.mount /etc/systemd/system/
 systemctl enable tmp.mount
+
+echo "Setting password for root"
+passwd
+
+echo "adding a user"
+read -r -p "username for first user?" _username
+usermod -a -G adm,cdrom,dip,lpadmin,plugdev,sambashare,sudo _username
+
+echo "using systemd-resolved"
+systemctl enable systemd-resolved.service
+ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
