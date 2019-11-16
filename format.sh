@@ -17,7 +17,7 @@ zpool labelclear -f ${DEST_DISK_PATH}-part4 || true
 sgdisk --zap-all "${DEST_DISK_PATH}"
 
 # BIOS
-sgdisk -a1 -n1:24K:+1000K -t1:EF02 "${DEST_DISK_PATH}"
+sgdisk -n1:2048:+1000K -t1:EF02 "${DEST_DISK_PATH}"
 # or UEFI
 #sgdisk     -n2:1M:+512M   -t2:EF00 "${DEST_DISK_PATH}"
 
