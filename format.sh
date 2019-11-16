@@ -50,6 +50,7 @@ zpool create -o ashift=12 -d \
 
 # create root-pool
 zpool create -o ashift=12 \
+    -o feature@log_spacemap=disabled \
     -O acltype=posixacl -O canmount=off -O compression=lz4 \
     -O dnodesize=auto -O normalization=formD -O relatime=on -O xattr=sa \
     -O mountpoint=/ -R "${DEST_CHROOT_DIR}" \
