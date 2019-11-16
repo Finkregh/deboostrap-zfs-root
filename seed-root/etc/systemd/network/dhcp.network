@@ -1,0 +1,9 @@
+[Match]
+Name=en*
+
+[Network]
+DHCP=yes
+MulticastDNS=true
+DNSSEC=allow-downgrade
+LLDP=true
+EmitLLDP=true
