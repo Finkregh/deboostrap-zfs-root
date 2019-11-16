@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-DEST_DISK_ID="ata-ST1000LM024_HN-M101MBB_S314JB0FA42608"
-DEST_DISK_PATH="/dev/disk/by-id/${DEST_DISK_ID}"
-PACKAGELIST="sudo,popularity-contest"
+declare -r DEST_DISK_ID="ata-ST1000LM024_HN-M101MBB_S314JB0FA42608"
+declare -r DEST_DISK_PATH="/dev/disk/by-id/${DEST_DISK_ID}"
+declare -r PACKAGELIST="sudo,popularity-contest"
+declare -r DEST_CHROOT_DIR="/mnt/tmp"
 
-DEST_CHROOT_DIR="/mnt/tmp"
 mkdir -p "${DEST_CHROOT_DIR}"
 
 zpool export bpool || true

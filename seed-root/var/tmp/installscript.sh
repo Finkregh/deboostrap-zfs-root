@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-DEST_DISK_ID="__DEST_DISK_ID__"
-DEST_DISK_PATH="/dev/disk/by-id/${DEST_DISK_ID}"
+declare -r DEST_DISK_ID="__DEST_DISK_ID__"
+declare -r DEST_DISK_PATH="/dev/disk/by-id/${DEST_DISK_ID}"
 
 ln -s /proc/self/mounts /etc/mtab
 apt-get update
