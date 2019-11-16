@@ -115,10 +115,10 @@ zfs set devices=off rpool
 # not needed for systemd-nspawn
 
 rsync -rlv seed-root/ "${DEST_CHROOT_DIR}/"
-sed -i "s,__DEST_DISK_ID__,${DEST_DISK_ID},g" "${DEST_CHROOT_DIR}/var/tmp/installscript.sh"
+sed -i "s,__DEST_DISK_ID__,${DEST_DISK_ID},g" "${DEST_CHROOT_DIR}/var/tmp/systemd-nspawnscript.sh"
+sed -i "s,__DEST_DISK_ID__,${DEST_DISK_ID},g" "${DEST_CHROOT_DIR}/var/tmp/chroot-script.sh"
 
-#chroot "${DEST_CHROOT_DIR}" /bin/bash -x /var/tmp/installscript.sh
-systemd-nspawn -D "${DEST_CHROOT_DIR}" /bin/bash -x /var/tmp/installscript.sh
+systemd-nspawn -D "${DEST_CHROOT_DIR}" /bin/bash -x /var/tmp/systemd-nspawnscript.sh
 
 if command -v arch-chroot; then
     arch-chroot ${DEST_CHROOT_DIR} bash -x /var/tmp/chroot-script.sh
