@@ -18,6 +18,9 @@ dpkg-reconfigure tzdata
 apt install --yes dpkg-dev linux-headers-amd64 linux-image-amd64
 apt install --yes zfs-initramfs zfsutils-linux zfs-zed firmware-linux firmware-linux-nonfree intel-microcode initramfs-tools systemd dialog moreutils aptitude
 
+apt install --yes openssh-server bridge-utils net-tools iproute2
+systemctl enable systemd-networkd.service
+
 apt install --yes grub-pc grub2
 
 systemctl enable zfs-import-bpool.service
