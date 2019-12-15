@@ -32,7 +32,8 @@ passwd
 
 echo "adding a user"
 read -r -p "username for first user?" _username
-usermod -a -G adm,cdrom,dip,lpadmin,plugdev,sambashare,sudo _username
+adduser "${_username}"
+usermod -a -G adm,cdrom,dip,lpadmin,plugdev,sambashare,sudo "${_username}"
 
 echo "using systemd-resolved"
 systemctl enable systemd-resolved.service
